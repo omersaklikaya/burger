@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-neutral-950;
+  }
+}
+
+@layer utilities {
+  .checker-bg {
+    background-image: linear-gradient(45deg, #fee2e2 25%, white 25%, white 50%, #fee2e2 50%, #fee2e2 75%, white 75%, white 100%);
+    background-size: 28px 28px;
+  }
+  .checker-footer {
+    background-image:
+      linear-gradient(45deg, #dc2626 25%, transparent 25%, transparent 75%, #dc2626 75%, #dc2626),
+      linear-gradient(45deg, #dc2626 25%, transparent 25%, transparent 75%, #dc2626 75%, #dc2626);
+    background-position: 0 0, 8px 8px;
+    background-size: 16px 16px;
+  }
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
