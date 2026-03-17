@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LanguageToggle } from "@/i18n/LanguageToggle";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -12,7 +11,7 @@ export function Header() {
       <div className="max-w-6xl mx-auto px-4 pt-0 pb-2 md:py-3 flex items-center justify-start md:justify-between relative">
         {/* Logo (solda) */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-24 h-24 -mb-8 bg-red-600 text-white font-hero tracking-[0.2em] text-lg uppercase shadow-[8px_8px_0_0_#000000] flex items-center justify-center">
+          <div className="w-24 h-24 -mb-8 md:-mt-3 bg-red-600 text-white font-hero tracking-[0.2em] text-lg uppercase shadow-[8px_8px_0_0_#000000] flex items-center justify-center">
             BULLS
           </div>
         </Link>
@@ -49,7 +48,6 @@ export function Header() {
           >
             KARİYER
           </Link>
-          <LanguageToggle />
         </nav>
 
         {/* Mobil hamburger (sağ üstte) */}
@@ -132,11 +130,10 @@ export function Header() {
             </Link>
           </nav>
 
-          <div className="border-t border-neutral-800 px-4 py-4 flex items-center justify-between">
-            <span className="text-xs text-neutral-400 tracking-[0.18em] uppercase">
-              Dil
-            </span>
-            <LanguageToggle />
+          <div className="border-t border-neutral-800 px-4 py-6 flex items-center justify-center">
+            <div className="w-20 h-20 bg-red-600 text-white font-hero tracking-[0.2em] text-sm uppercase shadow-[0_6px_0_0_#000000] flex items-center justify-center">
+              BULLS
+            </div>
           </div>
         </div>
     </header>

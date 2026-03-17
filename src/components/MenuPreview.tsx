@@ -47,7 +47,7 @@ export function MenuPreview() {
         {categories.map((cat) => (
           <Link
             key={cat.id}
-            href={`/menu#${cat.id}`}
+            href="/menu#burgerler"
             className="bg-white border-2 border-neutral-900 hover:border-red-600 transition-colors p-6 flex flex-col items-center shadow-[6px_6px_0_0_#000000]"
           >
             <div className="relative w-40 h-40 mb-4">

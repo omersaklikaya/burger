@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="relative border-b-4 border-red-600 overflow-hidden">
+    <section className="relative w-full border-b-4 border-red-600 overflow-hidden">
       {/* Arka plandaki fotoğraf */}
       <div className="absolute inset-0">
         <div
@@ -17,7 +17,7 @@ export function Hero() {
           <h1 className="text-5xl md:text-[5.5rem] font-hero tracking-[0.03em] mb-5 leading-[0.85] uppercase text-white drop-shadow-[4px_4px_0_rgba(0,0,0,0.95)]">
             <span className="block">HER ISIRIKTA</span>
             <span className="inline-flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-3 mt-2">
-              <span className="bg-red-600 px-4 py-2 shadow-[4px_4px_0_0_#000000]">
+              <span className="bg-red-600 px-4 py-2 shadow-[0_4px_0_0_#000000]">
                 BULLS
               </span>
               <span className="ml-1 md:ml-0">İMZASI</span>
@@ -31,13 +31,13 @@ export function Hero() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/menu"
-              className="bg-red-600 text-white px-6 py-3 text-sm font-extrabold tracking-[0.22em] uppercase hover:bg-red-700 transition-colors shadow-[6px_6px_0_0_#000000]"
+              className="bg-red-600 text-white px-6 py-3 text-sm font-extrabold tracking-[0.22em] uppercase hover:bg-red-700 transition-colors shadow-[0_6px_0_0_#000000]"
             >
               Menüyü Gör
             </Link>
             <Link
               href="/hikayemiz"
-              className="bg-white border-2 border-neutral-900 px-6 py-3 text-sm font-extrabold tracking-[0.22em] uppercase hover:bg-neutral-900 hover:text-white transition-colors shadow-[6px_6px_0_0_#000000]"
+              className="bg-white border-2 border-neutral-900 px-6 py-3 text-sm font-extrabold tracking-[0.22em] uppercase hover:bg-neutral-900 hover:text-white transition-colors shadow-[0_6px_0_0_#000000]"
             >
               Hikayemizi Oku
             </Link>

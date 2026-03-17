@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getFirebaseAuth, getFirebaseDb } from "@/lib/firebase";
@@ -39,6 +39,7 @@ export default function AdminPage() {
   const [pendingDelete, setPendingDelete] = useState<MenuItemDoc | null>(null);
 
   const canEdit = view.kind === "panel";
+  const formRef = useRef<HTMLDivElement | null>(null);
 
   async function loadItems() {
     setLoadingItems(true);
@@ -234,11 +235,19 @@ export default function AdminPage() {
 
         {view.kind === "panel" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="space-y-4">
+            {/* Liste bloğu: hem mobilde hem desktop'ta üstte/ solda */}
+            <div className="space-y-4 order-1">
               {itemsError && <div className="text-sm text-[#cc0000] font-semibold">{itemsError}</div>}
               <MenuItemTable
                 items={items}
-                onEdit={(it) => setEditing(it)}
+                onEdit={(it) => {
+                  setEditing(it);
+                  if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                    setTimeout(() => {
+                      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 50);
+                  }
+                }}
                 onDelete={(slug) => {
                   const found = items.find((i) => i.slug === slug) ?? null;
                   setPendingDelete(found);
@@ -274,7 +283,8 @@ export default function AdminPage() {
               </button>
             </div>
 
-            <div>
+            {/* Form bloğu: mobilde altta, desktop'ta sağda */}
+            <div ref={formRef} className="order-2 lg:order-2">
               <MenuItemForm
                 initial={editing ?? undefined}
                 onSave={handleSave}

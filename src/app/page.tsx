@@ -11,7 +11,7 @@ export default function HomePage() {
   const t = useTranslations();
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-black">
+    <div className="min-h-screen flex flex-col bg-white text-black overflow-x-hidden">
       <Header />
       <main className="flex-1">
         <Hero />

@@ -56,6 +56,31 @@ export function MenuList() {
     "İçecekler",
   ].filter((c) => groups[c]?.length);
 
+  // Mobilde kategori açık/kapalı durumunu hatırla (geri gelince yeniden açmak zorunda kalma)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.sessionStorage.getItem("menu-open-categories");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          setOpenCategories(parsed.filter((c) => typeof c === "string"));
+        }
+      }
+    } catch {
+      // sesssionStorage okunamazsa sessizce geç
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.sessionStorage.setItem("menu-open-categories", JSON.stringify(openCategories));
+    } catch {
+      // sesssionStorage yazılamazsa sessizce geç
+    }
+  }, [openCategories]);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -120,7 +145,7 @@ export function MenuList() {
               <h2 className="text-2xl font-semibold tracking-tight uppercase text-left">
                 {labelMap[category] ?? category}
               </h2>
-              <span className="text-xl font-extrabold">
+              <span className="text-xl font-extrabold md:hidden">
                 {isMobile && openCategories.includes(category) ? "−" : "+"}
               </span>
             </button>
