@@ -18,6 +18,9 @@ const hero = Poppins({
 export const metadata = {
   title: "Bulls Burger",
   description: "Bulls Burger - Five Guys esintili burgerci zinciri",
+  icons: {
+    icon: "/icon.ico",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

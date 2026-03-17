@@ -1,24 +1,68 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { products } from "@/data/products";
+import { products as staticProducts, type Product } from "@/data/products";
+import { doc, getDoc } from "firebase/firestore";
+import { getFirebaseDb } from "@/lib/firebase";
 
 interface Props {
   params: { slug: string };
 }
 
 export default function ProductDetailPage({ params }: Props) {
-  const product = products.find((p) => p.slug === params.slug);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!product) {
-    notFound();
-  }
+  const fallback = useMemo(() => staticProducts.find((p) => p.slug === params.slug) ?? null, [params.slug]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      try {
+        const snap = await getDoc(doc(getFirebaseDb(), "menuItems", params.slug));
+        if (cancelled) return;
+        if (snap.exists()) {
+          setProduct(snap.data() as Product);
+        } else {
+          setProduct(fallback);
+        }
+      } catch (e) {
+        if (cancelled) return;
+        setProduct(fallback);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    void run();
+    return () => {
+      cancelled = true;
+    };
+  }, [params.slug, fallback]);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-black">
       <Header />
       <main className="flex-1 max-w-4xl mx-auto px-4 py-16">
+        {loading && (
+          <div className="bg-white border-2 border-neutral-900 shadow-[10px_10px_0_0_#000000] p-6">
+            Yükleniyor...
+          </div>
+        )}
+
+        {!loading && !product && (
+          <div className="bg-white border-2 border-neutral-900 shadow-[10px_10px_0_0_#000000] p-6">
+            <h1 className="text-2xl font-extrabold mb-2">Ürün bulunamadı</h1>
+            <Link className="text-[#cc0000] font-extrabold" href="/menu">
+              Menüye dön
+            </Link>
+          </div>
+        )}
+
+        {!loading && product && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           <div>
             <div className="relative aspect-square bg-white border-2 border-neutral-900 shadow-[10px_10px_0_0_#000000] overflow-hidden">
@@ -72,6 +116,7 @@ export default function ProductDetailPage({ params }: Props) {
             </div>
           </div>
         </div>
+        )}
       </main>
       <Footer />
     </div>

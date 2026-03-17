@@ -6,7 +6,9 @@ const selectArrowSvg =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23cc0000'/%3E%3C/svg%3E\")";
 
 const inputClass =
-  "w-full border-[1.5px] border-[#1a1a1a] p-[10px] px-3 text-sm text-[#1a1a1a] bg-white outline-none font-[inherit] box-border focus:border-[#cc0000] rounded-none";
+  "w-full border border-[#999999] p-[10px] px-3 text-sm text-[#1a1a1a] bg-white outline-none font-[inherit] box-border focus:border-[#cc0000] rounded-none";
+const selectClass =
+  "w-full border border-[#999999] py-[11px] px-3 text-[15px] md:text-sm text-[#1a1a1a] bg-white outline-none font-[inherit] box-border focus:border-[#cc0000] rounded-none";
 const labelClass = "block text-[13px] font-normal text-[#1a1a1a] mb-1.5";
 
 const CV_MAX_MB = 5;
@@ -32,6 +34,8 @@ const REQUIRED_MSG = "Bu alan zorunludur.";
 
 export function CareerFormSection() {
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [cvError, setCvError] = useState<string | null>(null);
   const [phoneDigits, setPhoneDigits] = useState("");
@@ -55,7 +59,7 @@ export function CareerFormSection() {
     });
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errors: Record<string, string> = {};
 
@@ -90,7 +94,38 @@ export function CareerFormSection() {
     if (Object.keys(errors).length > 0) return;
 
     setLoading(true);
-    setTimeout(() => setLoading(false), 800);
+    setSubmitError(null);
+    setSubmitSuccess(null);
+
+    try {
+      const res = await fetch("/api/career", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          fullName,
+          age,
+          phone: phoneDigits ? `+90${phoneDigits}` : "",
+          email,
+          branch,
+          position,
+          workType,
+          experience,
+          intro,
+          cvFileName: fileName,
+        }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "Başvuru gönderilirken bir hata oluştu.");
+      }
+
+      setSubmitSuccess("Başvurun bize ulaştı. En kısa sürede geri dönüş yapacağız.");
+    } catch (err) {
+      setSubmitError("Başvuru gönderilirken bir hata oluştu. Lütfen daha sonra tekrar dene.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -113,7 +148,27 @@ export function CareerFormSection() {
           Formu doldur, seni tanıyalım.
         </p>
 
+        {submitSuccess ? (
+          <div className="bg-white border-2 border-neutral-900 shadow-[8px_8px_0_0_#000000] p-6 flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-green-600 border-2 border-neutral-900 flex items-center justify-center text-white text-xl">
+              ✓
+            </div>
+            <div>
+              <p className="text-sm font-extrabold tracking-[0.18em] uppercase text-[#1a1a1a]">
+                Başvurun gönderildi
+              </p>
+              <p className="text-sm text-[#555] mt-1">
+                En kısa sürede seninle iletişime geçeceğiz.
+              </p>
+            </div>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit}>
+          {submitError && (
+            <div className="mb-4">
+              <p className="text-sm text-[#cc0000] font-medium">{submitError}</p>
+            </div>
+          )}
           <div
             className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"
             style={{ gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}
@@ -164,11 +219,11 @@ export function CareerFormSection() {
                 </p>
               )}
               <div
-                className={`flex w-full border-[1.5px] bg-white rounded-none box-border ${
-                  fieldErrors.phone ? "border-[#cc0000]" : "border-[#1a1a1a] focus-within:border-[#cc0000]"
-                }`}
+                className={`flex w-full border bg-white rounded-none box-border ${
+                  fieldErrors.phone ? "border-[#cc0000]" : "border-[#999999]"
+                } focus-within:border-[#cc0000]`}
               >
-                <span className="inline-flex items-center border-r border-[#1a1a1a] px-3 text-sm text-[#1a1a1a] shrink-0 font-[inherit] bg-neutral-50">
+                <span className="inline-flex items-center border-r border-[#999999] px-3 text-sm text-[#1a1a1a] shrink-0 font-[inherit] bg-neutral-50">
                   +90
                 </span>
                 <input
@@ -221,7 +276,7 @@ export function CareerFormSection() {
               <select
                 ref={branchRef}
                 name="branch"
-                className={`${inputClass} ${fieldErrors.branch ? "border-[#cc0000]" : ""}`}
+                className={`${selectClass} ${fieldErrors.branch ? "border-[#cc0000]" : ""}`}
                 style={{
                   appearance: "none",
                   backgroundImage: selectArrowSvg,
@@ -248,7 +303,7 @@ export function CareerFormSection() {
               <select
                 ref={positionRef}
                 name="position"
-                className={`${inputClass} ${fieldErrors.position ? "border-[#cc0000]" : ""}`}
+                className={`${selectClass} ${fieldErrors.position ? "border-[#cc0000]" : ""}`}
                 style={{
                   appearance: "none",
                   backgroundImage: selectArrowSvg,
@@ -277,7 +332,7 @@ export function CareerFormSection() {
             <select
               ref={workTypeRef}
               name="workType"
-              className={`${inputClass} ${fieldErrors.workType ? "border-[#cc0000]" : ""}`}
+              className={`${selectClass} ${fieldErrors.workType ? "border-[#cc0000]" : ""}`}
               style={{
                 appearance: "none",
                 backgroundImage: selectArrowSvg,
@@ -303,7 +358,7 @@ export function CareerFormSection() {
             <select
               ref={experienceRef}
               name="experience"
-              className={`${inputClass} ${fieldErrors.experience ? "border-[#cc0000]" : ""}`}
+              className={`${selectClass} ${fieldErrors.experience ? "border-[#cc0000]" : ""}`}
               style={{
                 appearance: "none",
                 backgroundImage: selectArrowSvg,
@@ -397,6 +452,7 @@ export function CareerFormSection() {
             {loading ? "Gönderiliyor..." : "BAŞVUR"}
           </button>
         </form>
+        )}
       </div>
 
       {/* SAĞ — NEDEN BULLS? */}

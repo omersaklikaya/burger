@@ -50,10 +50,10 @@ export default function HomePage() {
               <div className="h-64 md:h-full bg-[url('/images/others/hero-1.jpg')] bg-cover bg-center rounded-sm md:rounded-none md:rounded-r-sm" />
             </div>
 
-            {/* Blok 2: full height görsel solda, metin sağda */}
+            {/* Blok 2: mobilde önce metin, sonra görsel; desktop'ta görsel solda, metin sağda */}
             <div className="grid gap-0 md:grid-cols-2 items-stretch">
-              <div className="h-64 md:h-full bg-[url('/images/others/hero-2.jpg')] bg-cover bg-center rounded-sm md:rounded-none md:rounded-l-sm" />
-              <div className="bg-white border border-neutral-200 rounded-sm md:rounded-none md:rounded-r-sm shadow-[0_4px_16px_rgba(0,0,0,0.08)] px-6 md:px-10 py-10 flex flex-col gap-4">
+              <div className="order-2 md:order-1 h-64 md:h-full bg-[url('/images/others/hero-2.jpg')] bg-cover bg-center rounded-sm md:rounded-none md:rounded-l-sm" />
+              <div className="order-1 md:order-2 bg-white border border-neutral-200 rounded-sm md:rounded-none md:rounded-r-sm shadow-[0_4px_16px_rgba(0,0,0,0.08)] px-6 md:px-10 py-10 flex flex-col gap-4">
                 <div className="flex items-center justify-start">
                   <span className="relative inline-flex items-center justify-center">
                     <span className="w-7 h-7 border-2 border-red-600 rounded-full" />

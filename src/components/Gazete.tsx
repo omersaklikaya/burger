@@ -54,15 +54,9 @@ export function Gazete() {
       </div>
 
       {/* 3 kolon */}
-      <div
-        className="grid gap-0"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1.5px 1fr 1.5px 1fr",
-        }}
-      >
+      <div className="grid gap-6 md:gap-0 md:grid-cols-[1fr_1.5px_1fr_1.5px_1fr]">
         {/* Sol kolon */}
-        <div className="pr-5" style={{ padding: "0 1.2rem 0 0" }}>
+        <div className="mb-6 md:mb-0 px-0 md:px-5">
           <p className="text-[14px] leading-[1.8] text-justify text-[#1a1a1a] mb-3" style={{ margin: "0 0 0.75rem" }}>
             Bulls Burger, sadece iyi bir burger yemek değil; aynı masada oturup aynı tadı paylaşmanın hikayesi. Bu hikaye, bir mangal kokusu ve etin tuzla buluştuğu ilk andan başlıyor.
           </p>
@@ -95,8 +89,9 @@ export function Gazete() {
           </p>
         </div>
 
-        {/* Kolon ayracı */}
+        {/* Kolon ayracı — sadece desktop */}
         <div
+          className="hidden md:block"
           style={{
             background: "#999",
             width: "1.5px",
@@ -106,7 +101,7 @@ export function Gazete() {
         />
 
         {/* Orta kolon */}
-        <div className="px-5" style={{ padding: "0 1.2rem" }}>
+        <div className="mb-6 md:mb-0 px-0 md:px-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/gazete.png"
@@ -149,8 +144,9 @@ export function Gazete() {
           </p>
         </div>
 
-        {/* Kolon ayracı */}
+        {/* Kolon ayracı — sadece desktop */}
         <div
+          className="hidden md:block"
           style={{
             background: "#999",
             width: "1.5px",
@@ -160,7 +156,7 @@ export function Gazete() {
         />
 
         {/* Sağ kolon */}
-        <div style={{ padding: "0 0 0 1.2rem" }}>
+        <div className="mb-0 px-0 md:px-5">
           <p className="text-[14px] leading-[1.8] text-justify text-[#1a1a1a] mb-3" style={{ margin: "0 0 0.75rem" }}>
             Adımızı &ldquo;Bulls&rdquo; seçmemizin sebebi sadece güç değil; <strong>inat ve tutku.</strong> Kaliteden ödün vermemek, her tabağı ilk günkü heyecanla hazırlamak, mahalledeki dükkân sıcaklığını büyütürken kaybetmemek… Bunlar bizi bugüne taşıyan değerler.
           </p>
@@ -182,7 +178,7 @@ export function Gazete() {
           —— KÖŞE YAZILARI ——
         </p>
         <div
-          className="grid gap-0 md:grid-cols-[1fr_1.5px_1fr_1.5px_1fr] mb-0"
+          className="grid gap-6 md:gap-0 md:grid-cols-[1fr_1.5px_1fr_1.5px_1fr] mb-0"
           style={{
             borderTop: "2px solid #1a1a1a",
             paddingTop: "1rem",
@@ -190,7 +186,7 @@ export function Gazete() {
           }}
         >
           {/* Sol köşe — Bugünün Menüsü */}
-          <div className="mb-8 md:mb-0 md:pr-5 md:py-0" style={{ padding: "0 1.2rem 0 0" }}>
+          <div className="mb-8 md:mb-0 px-0 md:px-5">
             <h3
               className="text-[16px] font-bold text-[#1a1a1a] border-b border-[#aaa] mb-3"
               style={{ paddingBottom: 4, marginBottom: "0.75rem" }}
@@ -230,7 +226,7 @@ export function Gazete() {
           />
 
           {/* Orta köşe — Okuyucu Postası */}
-          <div className="mb-8 md:mb-0 md:px-5" style={{ padding: "0 1.2rem" }}>
+          <div className="mb-8 md:mb-0 px-0 md:px-5">
             <h3
               className="text-[16px] font-bold text-[#1a1a1a] border-b border-[#aaa] mb-3"
               style={{ paddingBottom: 4, marginBottom: "0.75rem" }}
@@ -257,7 +253,7 @@ export function Gazete() {
           />
 
           {/* Sağ köşe — Bildiniz mi? */}
-          <div className="mb-8 md:mb-0 md:pl-5" style={{ padding: "0 0 0 1.2rem" }}>
+          <div className="mb-8 md:mb-0 px-0 md:px-5">
             <h3
               className="text-[16px] font-bold text-[#1a1a1a] border-b border-[#aaa] mb-3"
               style={{ paddingBottom: 4, marginBottom: "0.75rem" }}

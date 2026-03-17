@@ -192,7 +192,7 @@ function BranchModal({
       >
         <button
           type="button"
-          className="absolute top-3 right-3.5 text-[20px] text-[#1a1a1a] cursor-pointer bg-transparent border-none z-10"
+          className="absolute top-3 right-3.5 flex items-center justify-center w-9 h-9 rounded-full bg-black/80 text-white text-[22px] font-semibold shadow-md z-10"
           onClick={onClose}
           aria-label="Kapat"
         >
