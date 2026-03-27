@@ -8,7 +8,7 @@ export function Header() {
 
   return (
     <header className="border-b-4 border-red-600 bg-black/95 sticky top-0 z-20 overflow-visible">
-      <div className="max-w-6xl mx-auto px-4 pt-0 pb-2 md:py-3 flex items-center justify-start md:justify-between relative">
+      <div className="max-w-6xl mx-auto px-4 pt-0 pb-2 md:py-3 flex items-center justify-center md:justify-between relative">
         {/* Logo (solda) */}
         <Link href="/" className="flex items-center gap-3">
           <div className="w-24 h-24 -mb-8 md:-mt-3 bg-red-600 text-white font-hero tracking-[0.2em] text-lg uppercase shadow-[8px_8px_0_0_#000000] flex items-center justify-center">
